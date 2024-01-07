@@ -1,47 +1,56 @@
 import axios from "axios";
-import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { InfinitySpin } from "react-loader-spinner";
-import { GrFavorite } from "react-icons/gr";
-import { MdFavorite } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./FeaturedProduct.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartAction } from "../../Redux/actions/cartActions";
-import { WishListContext } from "../Context/wishListContext";
 import FavoritIcon from "./FavoritIcon";
-
+import { addToWishListAction } from "../../Redux/actions/wishListAction";
+import { wishlistContext } from "../Context/wishListContext";
+import toast from "react-hot-toast";
 export default function FeaturedProduct() {
+  const { wishlistCount, addProductToWishlist } = useContext(wishlistContext);
   const dispatch = useDispatch();
-  const [isActive, setIsActive] = useState(false);
-  const [isActive2, setIsActive2] = useState(false);
-  let { addToWishList } = useContext(WishListContext);
-  function getFeaturedProducts() {
-    return axios.get(`https://ecommerce.routemisr.com/api/v1/products`);
+  let [page, setPage] = useState(1);
+  function getFeaturedProducts(pageNum = 1) {
+    window.scrollTo({ top: 1000, left: 0, behavior: "smooth" });
+    return axios
+      .get(`https://ecommerce.routemisr.com/api/v1/products?page=${pageNum}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => err);
   }
   // usingReactQuery
-  let { data, isLoading } = useQuery("featuredProdects", getFeaturedProducts);
+  // let { data, isLoading ,isPreviousDat} = useQuery("featuredProdects", getFeaturedProducts);
+  const { data, isLoading, isPreviousData } = useQuery({
+    queryKey: ["getFeaturedProducts", page],
+    queryFn: () => getFeaturedProducts(page),
+    keepPreviousData: true,
+  });
   // console.log(data?.data.data);
   // addToCart
   const addToCart = (prodId) => {
     dispatch(addToCartAction(prodId));
   };
   // addProductToWishList
-  async function addProductToWishList(prodId) {
-    let { data } = await addToWishList(prodId);
-    console.log(data);
-    setIsActive(!isActive);
-    if (data.status === "success") {
+  // const addToWishList = (prodId) => {
+  //   dispatch(addToWishListAction(prodId));
+  // };
+  async function addwishlistItem(id) {
+    let response = await addProductToWishlist(id);
+    if (response?.data.status === "success") {
       toast.success("Product added successfully to your wishlist", {
-        duration: 2000,
-        position: "top-center",
-        style: {
-          maxWidth: "500px",
-        },
+        duration: 3500,
       });
+      // displayWishlistItems();
     } else {
-      toast.error("Product not added to your wishlist");
+      toast.error("error in removing the product from your wishlist", {
+        duration: 3500,
+      });
     }
   }
   return (
@@ -54,13 +63,19 @@ export default function FeaturedProduct() {
         <main className="container main my-5">
           <h1 className="h5 fw-bold">Get Your Favourite Products</h1>
           <div className="row g-4 my-2">
+            {/* using helmet */}
+            <Helmet>
+              <meta charSet="utf-8" />
+              <meta name="description" content="Home Page" />
+            </Helmet>
             {data?.data.data.map((product) => {
               return (
                 <div className="col-md-2 col-lg-2" key={product.id}>
                   <div className="product rounded-2 prCard shadow overflow-hidden position-relative">
-                    <FavoritIcon
-                      addToFav={addProductToWishList}
-                    />
+                    <span onClick={() => addwishlistItem(product._id)}>
+                      {" "}
+                      <FavoritIcon className="wishList__icon"/>
+                    </span>
 
                     <Link to={`ProductDetails/${product._id}`}>
                       <img
@@ -99,6 +114,8 @@ export default function FeaturedProduct() {
                 <button
                   className="page-link cursor-pointer text-main fw-semibold"
                   aria-label="Previous"
+                  onClick={() => setPage((old) => Math.max(old - 1, 1))}
+                  disabled={page === 1}
                 >
                   <span aria-hidden="true">&laquo;</span>
                 </button>
@@ -107,6 +124,12 @@ export default function FeaturedProduct() {
                 <button
                   className="page-link cursor-pointer text-main fw-semibold"
                   aria-label="Next"
+                  onClick={() => {
+                    if (!isPreviousData || data.next) {
+                      setPage((old) => old + 1);
+                    }
+                  }}
+                  disabled={page === 2}
                 >
                   <span aria-hidden="true">&raquo;</span>
                 </button>

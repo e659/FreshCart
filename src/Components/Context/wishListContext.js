@@ -1,28 +1,82 @@
+import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 
-import { createContext } from "react";
-export let WishListContext = createContext();
-export function WishListContextProvider(props) {
-  const headers = {
-    token: localStorage.getItem("usertoken"),
-  };
-  // addToWishList
-  function addToWishList(productId) {
+export const wishlistContext = createContext();
+
+export default function WishlistContextProvider(props) {
+  const [wishlistItem, setWishlist] = useState([]);
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  function addProductToWishlist(id) {
     return axios
       .post(
         `https://ecommerce.routemisr.com/api/v1/wishlist`,
         {
-          productId,
+          productId: id,
         },
         {
-          headers,
+          headers: { token: localStorage.getItem("usertoken") },
         }
       )
-      .then((response) => response).catch((err)=>err)
+      .then((response) => {
+        let count=response?.data.data;
+        console.log(count)
+        setWishlist(response?.data.data);
+        setWishlistCount(response?.data.data.length);
+        return response;
+      })
+      .catch((error) => error);
   }
+
+  function getLoggedUserWishlist() {
+    return axios
+      .get(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
+        headers: { token: localStorage.getItem("usertoken") },
+      })
+      .then((response) => {
+        setWishlistCount(response?.data.count);
+
+        setWishlist(
+          response?.data.data.map((item) => {
+            return item._id;
+          })
+        );
+
+        return response;
+      })
+      .catch((error) => error);
+  }
+
+  function deleteWishlistItem(id) {
+    return axios
+      .delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${id}`, {
+        headers: { token: localStorage.getItem("usertoken") },
+      })
+      .then((response) => {
+        setWishlist(response?.data.data);
+        setWishlistCount(response?.data.data.length);
+        return response;
+      })
+      .catch((error) => error);
+  }
+
+  useEffect(() => {
+    getLoggedUserWishlist();
+  }, []);
+
   return (
-    <WishListContext.Provider value={{addToWishList}}>
+    <wishlistContext.Provider
+      value={{
+        addProductToWishlist,
+        setWishlist,
+        wishlistItem,
+        deleteWishlistItem,
+        wishlistCount,
+        setWishlistCount,
+        getLoggedUserWishlist,
+      }}
+    >
       {props.children}
-    </WishListContext.Provider>
+    </wishlistContext.Provider>
   );
 }

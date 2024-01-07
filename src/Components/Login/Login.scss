@@ -1,0 +1,14 @@
+.reg__btn {
+  text-decoration: none;
+  padding-top: 10px;
+  font-size: 15px !important;
+  margin-top: 5px;
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .reg__btn {
+        text-decoration: none;
+        padding-top: 10px;
+        font-size: 10px !important;
+        margin-top: 2px;
+      }
+}

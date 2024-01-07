@@ -1,22 +1,26 @@
 import React, { useContext, useState } from "react";
 import { GrFavorite } from "react-icons/gr";
 import { MdFavorite } from "react-icons/md";
-import toast from "react-hot-toast";
-import { WishListContext } from "../Context/wishListContext";
-export default function FavoritIcon(props) {
+import "./FeaturedProduct.scss";
+export default function FavoritIcon() {
   const [isActive, setIsActive] = useState(false);
- console.log(props)
-  
+
   return (
     <>
+      
       {isActive ? (
         <MdFavorite
+          color="red"
+          className="position-absolute cursor-pointer wishList__icon "
+          style={{ left: "80%", top: "10px" }}
           onClick={() => {
             setIsActive(!isActive);
           }}
         />
       ) : (
         <GrFavorite
+          className="position-absolute cursor-pointer wishList__icon "
+          style={{ left: "80%", top: "10px" }}
           onClick={() => {
             setIsActive(!isActive);
           }}

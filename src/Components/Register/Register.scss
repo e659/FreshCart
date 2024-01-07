@@ -1,0 +1,42 @@
+.reg__row {
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.form-label {
+  font-weight: 500;
+}
+.eyeBtn {
+  position: absolute;
+  left: 80%;
+  top: 43%;
+  border: none !important;
+  color:#0aad0a !important;
+}
+.validationBox{
+  width: 95% !important;
+}
+// mediaQuery
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .reg__row {
+    width: 100% !important;
+  }
+  .eyeBtn {
+    left: 75%;
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 568px) {
+  .eyeBtn {
+    left: 75%;
+  }
+}
+@media screen and (min-width:568px) and (max-width:768px){
+  .reg__row {
+    width: 100% !important;
+  }
+ 
+}
+@media screen and (min-width:768px) and (max-width:992px){
+  .eyeBtn {
+    left: 75%;
+  }
+}

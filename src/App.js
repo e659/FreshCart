@@ -16,7 +16,11 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import VerifyCode from "./Components/VerifyCode/VerifyCode";
 import ResetPass from "./Components/ResetPass/ResetPass";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
-
+import WishList from "./Components/WishList/WishList";
+import Payment from "./Components/Payment/Payment";
+import UserAdress from "./Components/UserAddress/UserAdress";
+import AllOrders from "./Components/Orders/AllOrders";
+import CashAdress from "./Components/CashAdress/CashAdress";
 let routes = createBrowserRouter([
   {
     path: "/",
@@ -40,6 +44,15 @@ let routes = createBrowserRouter([
         ),
       },
       {
+        path: "allorders",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <AllOrders />{" "}
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "ProductDetails/:productId",
         element: (
           <ProtectedRoute>
@@ -49,11 +62,55 @@ let routes = createBrowserRouter([
         ),
       },
       {
+        path: "products/productDetails/:productId",
+        element: (
+          <ProtectedRoute>
+            <ProductDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "Cart",
         element: (
           <ProtectedRoute>
             {" "}
             <Cart />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "Payment",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <Payment />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "userAdress",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <UserAdress />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "cashAdress",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <CashAdress />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "WishList",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <WishList />
           </ProtectedRoute>
         ),
       },

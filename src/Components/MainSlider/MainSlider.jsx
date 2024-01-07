@@ -7,8 +7,7 @@ import slide4 from "../../Assets/images/slide4.jpg";
 import slide5 from "../../Assets/images/m1.jpg";
 import "./mainSlider.scss"
 function MainSlider() {
-  const settings = {
-   
+  const settings = {  
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -34,7 +33,7 @@ function MainSlider() {
               </div>
             </Slider>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 left__CatSide">
             <div className="position-relative">
               <h4 className="img__LayOut">Sneakers</h4>
               <img

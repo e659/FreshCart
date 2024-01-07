@@ -1,15 +1,24 @@
-import React, { useContext } from "react";
-import styles from "./Navbar.module.css";
+import React, { useEffect, useState, useContext } from "react";
+import "./Navbar.scss";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../Assets/images/freshcart-logo.svg";
 import { userContext } from "../Context/userContext";
 import { useNavigate } from "react-router-dom";
 import { IoCart } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
-import { addItemToCart } from "../../Redux/Reducer/cartReducer";
+import { wishlistContext } from "../Context/wishListContext";
 export default function Navbar() {
-  const CartLenght = useSelector((state) => state.addToCart.cart.numOfCartItems);
-  // console.log(CartLenght);
+  const dispatch = useDispatch();
+  const [cartCount, setCartCount] = useState(0);
+  const CartLenght = useSelector((state) =>
+    state.addToCart.cart.data?.products.reduce((a, b) => a + b.count, 0)
+  );
+  // console.log(CartLenght)
+  // const favLenght = useSelector((state) =>
+  //   state.wishList.wishList.data?.length
+  // );
+
+  const { wishlistCount } = useContext(wishlistContext);
   const navigate = useNavigate();
   // using userToken
   let { userToken, setUserToken } = useContext(userContext);
@@ -23,6 +32,10 @@ export default function Navbar() {
   // navigate To cart
   const navugateToCart = () => {
     navigate("/cart");
+  };
+  // navigate To wishlist
+  const navigateTowishlist = () => {
+    navigate("/WishList");
   };
   return (
     <>
@@ -110,6 +123,30 @@ export default function Navbar() {
                       Cart
                     </NavLink>
                   </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to="/wishList"
+                      style={({ isActive }) => ({
+                        color: isActive ? "#0aad0a" : "",
+                        fontWeight: isActive ? "bold" : "",
+                      })}
+                    >
+                     WishList
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to="/allorders"
+                      style={({ isActive }) => ({
+                        color: isActive ? "#0aad0a" : "",
+                        fontWeight: isActive ? "bold" : "",
+                      })}
+                    >
+                      Orders
+                    </NavLink>
+                  </li>
                 </ul>
               ) : (
                 ""
@@ -122,19 +159,33 @@ export default function Navbar() {
                   <i className="fab mx-2 fa-instagram"></i>
                   <i className="fab mx-2 fa-youtube"></i>
                   <i className="fab mx-2 fa-tiktok"></i>
-                  <IoCart
-                    className="cursor-pointer"
+                  {/* <IoCart
+                    className="cursor-pointer position-relative"
                     onClick={() => navugateToCart()}
                     size={25}
                   />
-                  <span>{CartLenght}</span>
+                  {CartLenght >= 1 ? (
+                    <span className="lenght__Cartspan">{CartLenght}</span>
+                  ) : (
+                    ""
+                  )}
+                 
+                  <i
+                    onClick={() => navigateTowishlist()}
+                    className="fa-regular fa-heart mx-3 fs-5 position-relative"
+                  ></i>
+                  {wishlistCount >= 1 ? (
+                    <span className="lenght__span">{wishlistCount}</span>
+                  ) : (
+                    ""
+                  )} */}
                 </li>
                 {/* hide login&register when loggedin user */}
                 {userToken !== null ? (
                   <li className="nav-item mx-3">
                     <span
                       onClick={() => logOut()}
-                      className="nav-link cursor-pointer"
+                      className="nav-link cursor-pointer log__out"
                       style={{
                         color: "white",
                         background: "#0aad0a",

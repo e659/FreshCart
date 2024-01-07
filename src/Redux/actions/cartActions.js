@@ -1,5 +1,6 @@
 import { ActionTypes } from "../Constance/actionsTypes";
 import axios from "axios";
+import { useState } from "react";
 import toast from "react-hot-toast";
 const headers = {
   token: localStorage.getItem("usertoken"),
@@ -27,17 +28,25 @@ export const addToCartAction = (productId) => async (dispatch) => {
   }
   //   console.log(response);
   dispatch({ type: ActionTypes.ADD_TO_CART, payload: response.data });
-  //   return{
-  //       type:ActionTypes.ADD_TO_CART,
-  //       payload:productId
-  //   }
 };
-export const getLoggedCartAction = (productId) => {
-  return {
-    type: ActionTypes.GET_LOGGED_CART,
-    payload: productId,
-  };
+// export const getLoggedCartAction = (productId) => {
+//   return {
+//     type: ActionTypes.GET_LOGGED_CART,
+//     payload: productId,
+//   };
+// };
+
+export const getLoggedCartAction = () => async (dispatch) => {
+  let response = await axios
+    .get(`https://ecommerce.routemisr.com/api/v1/cart`, {
+      headers: headers,
+    })
+    .catch((err) => err);
+
+  // console.log(response.data);
+  dispatch({ type: ActionTypes.GET_LOGGED_CART, payload: response.data });
 };
+
 export const deleteCartItemAction = (productId) => async (dispatch) => {
   let response = await axios
     .delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
@@ -57,37 +66,27 @@ export const deleteCartItemAction = (productId) => async (dispatch) => {
   }
   // console.log(response.data)
   dispatch({ type: ActionTypes.DELETE_ITEM, payload: response.data });
-  // return {
-  //   type: ActionTypes.DELETE_ITEM,
-  //   payload: productId,
-  // };
 };
-export const updateCartItemAction = (productId, count) =>async (dispatch) => {
+export const updateCartItemAction = (productId, count) => async (dispatch) => {
   let { data } = await axios
-  .put(
-    `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
-    {
-      count: count,
-    },
-    { headers: headers }
-  )
-  .catch((err) => err);
-  dispatch({ type: ActionTypes.UPDATE_QTY, payload:data });
-  // return {
-  //   type: ActionTypes.UPDATE_QTY,
-  //   payload: productId,
-  // };
+    .put(
+      `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
+      {
+        count: count,
+      },
+      { headers: headers }
+    )
+    .catch((err) => err);
+  dispatch({ type: ActionTypes.UPDATE_QTY, payload: data });
+
 };
-export const clearAllCartItemsAction = () =>async (dispatch) =>  {
+export const clearAllCartItemsAction = () => async (dispatch) => {
   let { data } = await axios
-  .delete(`https://ecommerce.routemisr.com/api/v1/cart`, {
-    headers: headers,
-  })
-  .catch((err) => err);
-    console.log(data)
-    dispatch({ type: ActionTypes.CLEAR_ALL_CART});
-  // return {
-  //   type: ActionTypes.UPDATE_QTY,
-   
-  // };
+    .delete(`https://ecommerce.routemisr.com/api/v1/cart`, {
+      headers: headers,
+    })
+    .catch((err) => err);
+  console.log(data);
+  dispatch({ type: ActionTypes.CLEAR_ALL_CART });
+ 
 };

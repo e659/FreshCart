@@ -22,13 +22,7 @@ function CategorySlider() {
     cssEase: "linear",
     centerPadding: "100px",
   };
-  // getAllCategories
-  // function getAllCaterories() {
-  //   return axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);
-  // }
-  // // useUseQuery
-  // let { data, isLoading } = useQuery("CategoriesSlider", getAllCaterories);
-  // // console.log(data?.data.data);
+
   return (
     <>
       <h1 className="h5 fw-bold pt-5 pb-4">Get Your Favourite Products</h1>
@@ -58,24 +52,6 @@ function CategorySlider() {
           <img src={headphones} alt="headphones" className="w-50" />
         </div>
       </Slider>
-
-      {/* {data?.data.data ? (
-        <Slider {...settings}>
-          {data?.data.data?.map((category) => (
-            <div key={category._id}>
-              <img
-                className="cursor-pointer w-100 rounded rounded-5 px-2"
-                height={200}
-                key={category._id}
-                src={category.image}
-                alt={category.name}
-              />
-            </div>
-          ))}
-        </Slider>
-      ) : (
-        ""
-      )} */}
     </>
   );
 }

@@ -8,11 +8,9 @@
   border-radius: 10px;
   width: 300px !important;
   height: 200px;
-
 }
 .bg2 {
   background-color: aqua;
-
 }
 .bg3 {
   background-color: blueviolet;
@@ -31,4 +29,29 @@
 }
 .bg8 {
   background-color: green;
+}
+// mediaQuery
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .catg__div {
+    width: 90px !important;
+    height: 100px;
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 568px) {
+  .catg__div {
+    width: 98px !important;
+    height: 100px;
+  }
+}
+@media screen and (min-width: 568px) and (max-width: 768px) {
+  .catg__div {
+    width: 120px !important;
+    height: 100px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .catg__div {
+    width: 150px !important;
+    height: 120px;
+  }
 }

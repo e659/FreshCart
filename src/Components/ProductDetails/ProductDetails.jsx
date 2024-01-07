@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -6,9 +6,10 @@ import { InfinitySpin } from "react-loader-spinner";
 import { Helmet } from "react-helmet";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
-import {addToCartAction} from "../../Redux/actions/cartActions";
+import { addToCartAction } from "../../Redux/actions/cartActions";
 import "./productDetails.scss";
 function ProductDetails() {
+  const [loading, setLoading] = useState(false);
   const { productId } = useParams();
   const dispatch = useDispatch();
   // get spesific product
@@ -20,20 +21,21 @@ function ProductDetails() {
     getProductDetails(productId)
   );
 
-    // addToCart
-    const addToCart = (prodId) => {
-      dispatch(addToCartAction(prodId));
-    };
+  // addToCart
+  const addToCart = (prodId) => {
+    dispatch(addToCartAction(prodId));
+  };
   const settings = {
     customPaging: function (i) {
-     
-      for(let i=0;i < data?.data.data.images.length; i++){
-        
-      }
+      for (let i = 0; i < data?.data.data.images.length; i++) {}
       return (
-        
-        <a>
-          <img src={data?.data.data.images[i]} height={50} className=""/>
+        <a href="">
+          <img
+            src={data?.data.data.images[i]}
+            alt=""
+            height={50}
+            className=""
+          />
         </a>
       );
     },
@@ -46,13 +48,6 @@ function ProductDetails() {
   };
   return (
     <>
-      {/* {isLoading ? (
-        <div className="position-fixed start-0 end-0 top-0 bottom-0 d-flex justify-content-center align-items-center overlay">
-          <InfinitySpin width="200" color="#4fa94d" />
-        </div>
-      ) : (
-     
-      )} */}
       {data?.data.data ? (
         <div className="container py-5">
           <div className="row py-5 align-items-center">
@@ -63,15 +58,10 @@ function ProductDetails() {
               <title>{data?.data.data.title}</title>
             </Helmet>
             <div className="col-md-4 pt-5">
-              {/* <img
-                src={data?.data.data.imageCover}
-                alt={data?.data.data.title}
-                className="img-fluid"
-              /> */}
               <Slider {...settings}>
                 {data?.data.data.images?.map((img) => (
                   <img
-                  key={data?.data.data._id}
+                    key={data?.data.data._id}
                     className="cursor-pointer w-100 rounded"
                     height={200}
                     src={img}
@@ -80,7 +70,7 @@ function ProductDetails() {
                 ))}
               </Slider>
             </div>
-            <div className="col-md-8 pt-5">
+            <div className="col-md-8 pt-5 prod___Details">
               <div className="prodDes">
                 <h2 className="h5">{data?.data.data.title}</h2>
                 <p className="">{data?.data.data.description}</p>
@@ -97,16 +87,19 @@ function ProductDetails() {
                   {data?.data.data.ratingsAverage}{" "}
                 </span>
               </div>
-              <button 
-              onClick={()=>addToCart(data?.data.data._id)}
-              className="btn bg-main w-100 text-white mt-2">
+              <button
+                onClick={() => addToCart(data?.data.data._id)}
+                className="btn bg-main w-100 text-white mt-2"
+              >
                 Add To Cart
               </button>
             </div>
           </div>
         </div>
       ) : (
-        ""
+        <div className="position-fixed start-0 end-0 top-0 bottom-0 d-flex justify-content-center align-items-center overlay">
+          <InfinitySpin width="200" color="#4fa94d" />
+        </div>
       )}
     </>
   );

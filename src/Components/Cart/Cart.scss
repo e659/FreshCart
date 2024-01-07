@@ -3,3 +3,34 @@
 
   border-radius: 10px;
 }
+// mediaQuery
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .cart__inc {
+    transform: translate(51px, -5px) !important;
+  }
+  .cash__btn {
+    font-size: 10px !important;
+
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 568px) {
+   .cart__inc {
+    transform: translate(45px, -5px) !important;
+  }
+  .cash__btn {
+    font-size: 11px !important;
+    
+  }
+}
+@media screen and (min-width: 568px) and (max-width: 768px) {
+  .cart__inc {
+    transform: translate(35px, -5px) !important;
+  }
+  .cash__btn {
+    font-size: 13px !important;
+    
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+
+}
