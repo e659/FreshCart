@@ -18,7 +18,7 @@ function MainSlider() {
     <>
       <div className="container-fluid pt-5">
         <div className="row pt-4 ">
-          <div className="col-md-8 ">
+          <div className="col-md-8 col-sm-12 right__side overflow-hidden">
             <div className="layOut">
                 <h5>New Arrivals</h5>
                 <p className="ps-2">Enjoy This Winter Collection</p>

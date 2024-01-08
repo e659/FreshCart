@@ -8,11 +8,12 @@
     rgba(145, 158, 171, 0.12) 0px 1px 10px 0px;
   --font-family: "Encode Sans Expanded", sans-serif;
   --rating-color: #ffc908;
+  overflow-x: hidden !important;
 }
 
-/* body{
-    font-family: var(--font-family) !important;
-} */
+body{
+  overflow-x: hidden !important;
+}
 .rating-color {
   color: var(--rating-color);
 }
