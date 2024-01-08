@@ -21,7 +21,7 @@ import Payment from "./Components/Payment/Payment";
 import UserAdress from "./Components/UserAddress/UserAdress";
 import AllOrders from "./Components/Orders/AllOrders";
 import CashAdress from "./Components/CashAdress/CashAdress";
-let routes = createHashRouter([
+let routes = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
