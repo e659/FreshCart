@@ -1,5 +1,5 @@
 import "./App.css";
-import { RouterProvider, createBrowserRouter,Switch } from "react-router-dom";
+import { RouterProvider, createBrowserRouter,createHashRouter} from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useContext, useEffect } from "react";
 import Home from "./Components/Home/Home";
@@ -21,7 +21,7 @@ import Payment from "./Components/Payment/Payment";
 import UserAdress from "./Components/UserAddress/UserAdress";
 import AllOrders from "./Components/Orders/AllOrders";
 import CashAdress from "./Components/CashAdress/CashAdress";
-let routes = createBrowserRouter([
+let routes = createHashRouter([
   {
     path: "/",
     element: <Layout />,
