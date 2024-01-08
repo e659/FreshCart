@@ -1,5 +1,5 @@
 import "./App.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter,Switch } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useContext, useEffect } from "react";
 import Home from "./Components/Home/Home";
