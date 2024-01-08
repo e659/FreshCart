@@ -41,7 +41,7 @@ export default function UserAdress() {
           setIsLoading(true);
           let res = await onlinePayment(
             cartId,
-            "https://e659.github.io/FreshCart",
+            "https://freshh-cart.vercel.app",
             values
           );
           console.log(res);
