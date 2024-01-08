@@ -41,7 +41,7 @@ export default function UserAdress() {
           setIsLoading(true);
           let res = await onlinePayment(
             cartId,
-            "http://localhost:3000",
+            "https://e659.github.io/FreshCart/",
             values
           );
           console.log(res);
